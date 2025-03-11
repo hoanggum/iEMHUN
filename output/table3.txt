@@ -1,0 +1,11 @@
+Itemset: [4], Utility: 28.00
+Itemset: [4 3], Utility: 31.00
+Itemset: [5 4 3], Utility: 37.00
+Itemset: [5 4 2 3], Utility: 27.00
+Itemset: [5 4], Utility: 37.00
+Itemset: [5 2 4], Utility: 31.00
+Itemset: [6 2 4 5], Utility: 25.00
+Itemset: [4 2], Utility: 25.00
+
+Thời gian chạy thuật toán: 0.000568 giây
+Bộ nhớ sử dụng: 52 KB

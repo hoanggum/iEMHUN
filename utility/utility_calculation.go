@@ -1,8 +1,8 @@
 package utility
 
 import (
-	"iemhun/models"
 	"fmt"
+	"iemhun/models"
 )
 
 func CalculateTransactionUtility(transaction *models.Transaction) float64 {
@@ -88,14 +88,18 @@ func CalculateRemainingResidualUtility(transaction *models.Transaction, currentI
 	return rru
 }
 
-func CalculateRTWUForAllItems(transactions []*models.Transaction, rho, delta, eta map[int]bool, utilityArray *models.UtilityArray) {
+func CalculateRTWUForAllItems(transactions []*models.Transaction, itemTransactionMap map[int][]int, rho, delta, eta map[int]bool, utilityArray *models.UtilityArray) {
+	// Tạo tập hợp hợp nhất (ρ ∪ δ ∪ η)
 	combinedSet := UnionMaps(rho, delta)
 	combinedSet = UnionMaps(combinedSet, eta)
 
 	for item := range combinedSet {
 		totalRTWU := 0.0
-		for _, transaction := range transactions {
-			if ContainsItem(transaction, item) {
+
+		// Chỉ duyệt qua các transactions chứa item này
+		if transactionIndexes, exists := itemTransactionMap[item]; exists {
+			for _, index := range transactionIndexes {
+				transaction := transactions[index-1] // index-1 vì danh sách transactions bắt đầu từ 0
 				rtwu := CalculateRTUForTransaction(transaction)
 				totalRTWU += rtwu
 			}
@@ -115,15 +119,22 @@ func CalculateRTUForTransaction(transaction *models.Transaction) float64 {
 	return rtwu
 }
 
-func CalculateRSUForAllItems(transactions []*models.Transaction, secondary []int, utilityArray *models.UtilityArray) {
+func CalculateRSUForAllItems(transactions []*models.Transaction, itemTransactionMap map[int][]int, secondary []int, utilityArray *models.UtilityArray) {
 	for _, item := range secondary {
 		totalRSU := 0.0
 
-		for _, transaction := range transactions {
-			if ContainsItem(transaction, item) {
-				index := GetItemIndex(transaction, item)
-				itemUtility := transaction.Utilities[index]
-				remainingUtility := CalculateRemainingUtility(transaction, index+1)
+		// Chỉ duyệt transactions chứa item này
+		if transactionIndexes, exists := itemTransactionMap[item]; exists {
+			for _, index := range transactionIndexes {
+				transaction := transactions[index-1] // index-1 vì danh sách transactions bắt đầu từ 0
+
+				itemIndex := GetItemIndex(transaction, item)
+				if itemIndex == -1 {
+					continue
+				}
+
+				itemUtility := transaction.Utilities[itemIndex]
+				remainingUtility := CalculateRemainingUtility(transaction, itemIndex+1)
 				totalRSU += itemUtility + remainingUtility
 			}
 		}

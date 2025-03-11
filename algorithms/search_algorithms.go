@@ -1,9 +1,9 @@
 package algorithms
 
 import (
+	"fmt"
 	"iemhun/models"
 	"iemhun/utility"
-	"fmt"
 )
 
 type SearchAlgorithms struct {
