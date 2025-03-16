@@ -23,6 +23,7 @@ func NewSearchAlgorithms(utilityArray *models.UtilityArray) *SearchAlgorithms {
 	}
 }
 
+// Chưa cải tiến
 func (s *SearchAlgorithms) Search(eta []int, X map[int]bool, transactions []*models.Transaction, primary []int, secondary []int, minU float64) {
 	if len(primary) == 0 {
 		return
@@ -79,6 +80,7 @@ func (s *SearchAlgorithms) Search(eta []int, X map[int]bool, transactions []*mod
 	}
 }
 
+// Chưa cải tiến
 func (s *SearchAlgorithms) SearchN(eta []int, beta map[int]bool, transactions []*models.Transaction, minU float64) {
 	if len(eta) == 0 {
 		return

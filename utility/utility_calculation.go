@@ -153,6 +153,7 @@ func CalculateRemainingUtility(transaction *models.Transaction, startIndex int) 
 	return remainingUtility
 }
 
+// Chưa cải tiến
 func CalculateRSUForAllItem(transactions []*models.Transaction, X []int, secondary []int, utilityArray *models.UtilityArray) {
 	for _, item := range secondary {
 		totalRSU := 0.0
@@ -171,6 +172,7 @@ func CalculateRSUForAllItem(transactions []*models.Transaction, X []int, seconda
 	}
 }
 
+// Chưa cải tiến
 func CalculateRLUForAllItem(transactions []*models.Transaction, X []int, secondary []int, utilityArray *models.UtilityArray) {
 	for _, item := range secondary {
 		totalRLU := 0.0
