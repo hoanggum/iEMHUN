@@ -38,18 +38,18 @@ func (e *EMHUN) Run() {
 	fmt.Println("Running EMHUN...")
 	e.BuildItemTransactionMap()
 
-	fmt.Println("Item Transaction Map:")
-	e.PrintItemTransactionMap()
+	// fmt.Println("Item Transaction Map:")
+	// e.PrintItemTransactionMap()
 	e.ClassifyItems()
 
-	fmt.Println("\nAfter classify, we have:")
-	e.printClassification()
+	// fmt.Println("\nAfter classify, we have:")
+	// e.printClassification()
 
-	fmt.Println("\nCalculating RTWU for all items in (ρ ∪ δ):")
+	// fmt.Println("\nCalculating RTWU for all items in (ρ ∪ δ):")
 	utility.CalculateRTWUForAllItems(e.Transactions, e.ItemTransactionMap, e.Rho, e.Delta, e.Eta, e.UtilityArray)
 
-	fmt.Println("\nUA:")
-	e.UtilityArray.PrintUtilityArray()
+	// fmt.Println("\nUA:")
+	// e.UtilityArray.PrintUtilityArray()
 
 	combinedSet := e.unionKeys(e.Rho, e.Delta)
 	secondaryItems := e.getSecondaryItems(combinedSet, e.UtilityArray, e.MinUtility)
@@ -57,28 +57,27 @@ func (e *EMHUN) Run() {
 	e.SortedSecondary = e.sortItems(secondaryItems)
 	e.SortedEta = e.sortItems(e.keys(e.Eta))
 
-	fmt.Println("\nSortedSecondary:", e.SortedSecondary)
-	fmt.Println("\nSortedSecondary:", e.SortedEta)
+	// fmt.Println("\nSortedSecondary:", e.SortedSecondary)
+	// fmt.Println("\nSortedSecondary:", e.SortedEta)
 
 	secondaryItemsMap := convertSliceToMap(e.SortedSecondary)
 	e.FilterTransactions(secondaryItemsMap, e.Eta)
 
-	e.PrintTransactions()
-	e.PrintItemTransactionMap()
+	// e.PrintTransactions()
+	// e.PrintItemTransactionMap()
 
 	e.SortItemsInTransactions()
-	e.PrintTransactions()
+	// e.PrintTransactions()
 
-	fmt.Println("\nSorting transactions by total RTWU:")
+	// fmt.Println("\nSorting transactions by total RTWU:")
 	e.SortTransactionsByTWU()
-	fmt.Println("\nTransactions after sorting by RTWU:")
-	e.PrintTransactions()
-	fmt.Println("\nCalculating RSU for each item in Secondary(X)...")
+	// fmt.Println("\nTransactions after sorting by RTWU:")
+	// e.PrintTransactions()
+	// fmt.Println("\nCalculating RSU for each item in Secondary(X)...")
 	utility.CalculateRSUForAllItems(e.Transactions, e.ItemTransactionMap, e.SortedSecondary, e.UtilityArray)
-	fmt.Println("\nUA:")
-	e.UtilityArray.PrintUtilityArray()
+
 	e.identifyPrimaryItems()
-	fmt.Println("Primary:", e.PrimaryItems)
+	// fmt.Println("Primary:", e.PrimaryItems)
 	fmt.Println("\nStarting HUI Search...")
 	e.SearchAlgorithms.Search(e.SortedEta, make(map[int]bool), e.Transactions, e.PrimaryItems, e.SortedSecondary, e.MinUtility)
 
